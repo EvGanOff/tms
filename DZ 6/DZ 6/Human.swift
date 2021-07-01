@@ -23,7 +23,6 @@ class Student {
 }
 
 class Group {
-    
     let gropeName: String
     let studentsNote: [Student]
     init(gropeName: String, studentArray: [Student]) {
@@ -33,21 +32,23 @@ class Group {
     
     ///======== метод вывода =======
     
-    func getStudents(array: [Student]) {
-        for (index, value) in array.enumerated() {
+    func getStudents() {
+        let someArr = studentsNote
+        for (index, value) in someArr.enumerated() {
             print("№","\(index + 1)", "Имя - \(value.studentFirstName)", "||", "Фамилия - \(value.studentSecondName)", "||", "Возраст - \(value.studentAge)", "||", "Средний балл - \(value.studentMark)")
         }
     }
     
     ///========== метод отбора студентов ========
     
-    func removeStudents(array: [Student]) {
-        var hallperAray = array
-        for (index, value) in hallperAray.enumerated() {
-            if value.studentMark > 3 {
+    func removeStudents(funcStudentMark: Int) {
+        var hallperAray = studentsNote
+        for (index, value) in hallperAray.enumerated().reversed() {
+            if value.studentMark > funcStudentMark {
                 hallperAray.removeAll()
                 print("№","\(index + 1)", "Имя - \(value.studentFirstName)", "||", "Фамилия - \(value.studentSecondName)", "||", "Возраст - \(value.studentAge)", "||", "Средний балл - \(value.studentMark)")
             }
         }
+        
     }
 }

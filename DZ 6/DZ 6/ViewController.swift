@@ -43,14 +43,14 @@ class ViewController: UIViewController {
         
         print("===================",studentsNoteBook.gropeName,"===================")
         print()
-        studentsNoteBook.getStudents(array: [student1, student2, student3, student4, student5])
+        studentsNoteBook.getStudents()
         
         print()
         print("============ Cтуденты, у кого средний балл выше 3 ===========")
         print()
         print("===================",studentsNoteBook.gropeName,"===================")
         print()
-        studentsNoteBook.removeStudents(array: [student1, student2, student3, student4, student5])
+        studentsNoteBook.removeStudents(funcStudentMark: 3)
         
     }
 }
