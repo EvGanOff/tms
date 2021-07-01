@@ -50,7 +50,7 @@ class ViewController: UIViewController {
         print()
         print("===================",studentsNoteBook.gropeName,"===================")
         print()
-        studentsNoteBook.removeStudents(funcStudentMark: 3)
+        studentsNoteBook.removeStudents(funcStudentMark: 5)
         
     }
 }

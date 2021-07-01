@@ -24,7 +24,7 @@ class Student {
 
 class Group {
     let gropeName: String
-    let studentsNote: [Student]
+    var studentsNote: [Student]
     init(gropeName: String, studentArray: [Student]) {
         self.studentsNote = studentArray
         self.gropeName = gropeName
@@ -42,10 +42,9 @@ class Group {
     ///========== метод отбора студентов ========
     
     func removeStudents(funcStudentMark: Int) {
-        var hallperAray = studentsNote
-        for (index, value) in hallperAray.enumerated().reversed() {
-            if value.studentMark > funcStudentMark {
-                hallperAray.removeAll()
+        for (index, value) in studentsNote.enumerated().reversed() {
+            if value.studentMark < funcStudentMark {
+                studentsNote.remove(at: index)
                 print("№","\(index + 1)", "Имя - \(value.studentFirstName)", "||", "Фамилия - \(value.studentSecondName)", "||", "Возраст - \(value.studentAge)", "||", "Средний балл - \(value.studentMark)")
             }
         }
