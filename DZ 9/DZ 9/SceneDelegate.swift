@@ -2,7 +2,7 @@
 //  SceneDelegate.swift
 //  DZ 9
 //
-//  Created by AWAIN on 10.07.2021.
+//  Created by AWAIN on 18.07.2021.
 //
 
 import UIKit
