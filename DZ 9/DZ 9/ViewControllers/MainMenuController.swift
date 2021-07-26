@@ -12,17 +12,17 @@ class MainMenuController: UIViewController {
     @IBAction func newGame(_ sender: Any) {
         present(getViewController(from: "ViewController"), animated: true, completion: nil)
     }
+    @IBAction func statistic(_ sender: Any) {
+        present(getViewController(from: "StatisticViewController"), animated: true, completion: nil)
+    }
+    @IBAction func settings(_ sender: Any) {
+        present(getViewController(from: "SettingsViewController"), animated: true, completion: nil)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
-    func getViewController(from id: String) -> UIViewController {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let currentViewController = storyboard.instantiateViewController(withIdentifier: id)
-        currentViewController.modalPresentationStyle = .fullScreen
-        currentViewController.modalTransitionStyle = .crossDissolve
-        return currentViewController
-    }
+    
 
 }

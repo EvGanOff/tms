@@ -7,25 +7,18 @@
 
 import UIKit
 
-
-class ViewController: UIViewController {
-    ///// MARK: Navigation metod
-    func getViewController(from id: String) -> UIViewController {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let currentViewController = storyboard.instantiateViewController(withIdentifier: id)
-        currentViewController.modalPresentationStyle = .fullScreen
-        currentViewController.modalTransitionStyle = .crossDissolve
-        return currentViewController
-    }
-    @IBAction func backToMenu(_ sender: Any) {
-        timer?.invalidate()
-        present(getViewController(from: "MainMenuController"), animated: true, completion: nil)
-    }
+class ViewController: UIViewController  {
     var timer: Timer?
     var countTimer: Int = 0
     var time: UILabel!
     var checkersBoard: UIView!
     let board = UIImageView()
+    var longPres = false
+    
+    @IBAction func backToMenu(_ sender: Any) {
+        timer?.invalidate()
+        present(getViewController(from: "MainMenuController"), animated: true, completion: nil)
+    }
     @IBOutlet weak var deskboard: UIImageView!
     @IBOutlet weak var mainImage: UIImageView!
     
@@ -81,27 +74,48 @@ func makeBoard()  {
                 chekers.isUserInteractionEnabled = true
                 value.addSubview(chekers)
                 
+                let longPressRecognaizer = UILongPressGestureRecognizer(target: self, action: #selector(tapRecognaizer(_:)))
+                longPressRecognaizer.minimumPressDuration = 0.1
+                longPressRecognaizer.delegate = self
+                chekers.addGestureRecognizer(longPressRecognaizer)
                 let panRecognaser = UIPanGestureRecognizer(target: self, action: #selector(panRecognaser(_:)))
+                panRecognaser.delegate = self
                 chekers.addGestureRecognizer(panRecognaser)
                 }
             }
         }
     }
+    
+    
+    @objc func tapRecognaizer(_ sender: UILongPressGestureRecognizer) {
+        guard !longPres else { return }
+        longPres = true
+        UIView.animate(withDuration: 0.1) {
+            sender.view?.transform = (sender.view?.transform.scaledBy(x: 1.2, y: 1.2))!
+        }
+    }
 
     @objc func panRecognaser(_ sender: UIPanGestureRecognizer) {
+        guard longPres else { return }
+           
         let location = sender.location(in: checkersBoard)
         let translation = sender.translation(in: checkersBoard)
         
         switch sender.state {
         case .changed:
             guard let gate = sender.view?.superview, let cellOrigin = sender.view?.frame.origin else { return }
+           
             checkersBoard.bringSubviewToFront(gate)
             sender.view?.frame.origin = CGPoint(x: cellOrigin.x + translation.x,
                                                 y: cellOrigin.y + translation.y)
             sender.setTranslation(.zero, in: checkersBoard)
+           
         case .ended:
+            UIView.animate(withDuration: 0.1) {
+                sender.view?.transform = .identity
+            }
+            longPres = false
             var revCell: UIView? = nil
-
             for cell in checkersBoard.subviews{
                 if cell.frame.contains(location), cell.backgroundColor == .black {
                     revCell = cell
@@ -115,12 +129,10 @@ func makeBoard()  {
         default:
             break
         }
+        
     }
     
     
-    
-    
-    
-    
-    
 }
+
+
